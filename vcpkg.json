@@ -1,0 +1,10 @@
+{
+    "name": "behaviortree",
+    "version": "4.5",
+    "port-version": 0,
+    "description": "",
+    "homepage": "",
+    "dependencies": [
+        "gtest"
+    ]
+}

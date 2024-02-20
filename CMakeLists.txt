@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.16.3) # version on Ubuntu Focal
 
+include("${VCPKG_OVERLAY_TRIPLETS}/${VCPKG_TARGET_TRIPLET}.cmake" OPTIONAL)
+
 project(behaviortree_cpp VERSION 4.5.1 LANGUAGES C CXX)
 
 set(CMAKE_CONFIG_PATH ${CMAKE_MODULE_PATH}  "${CMAKE_CURRENT_LIST_DIR}/cmake")
@@ -27,8 +29,8 @@ option(BTCPP_SHARED_LIBS "Build shared libraries" ON)
 option(BTCPP_BUILD_TOOLS "Build commandline tools" ON)
 option(BTCPP_EXAMPLES   "Build tutorials and examples" ON)
 option(BTCPP_UNIT_TESTS "Build the unit tests" ON)
-option(BTCPP_GROOT_INTERFACE "Add Groot2 connection. Requires ZeroMQ" ON)
-option(BTCPP_SQLITE_LOGGING "Add SQLite logging." ON)
+option(BTCPP_GROOT_INTERFACE "Add Groot2 connection. Requires ZeroMQ" OFF)
+option(BTCPP_SQLITE_LOGGING "Add SQLite logging." OFF)
 
 option(USE_V3_COMPATIBLE_NAMES  "Use some alias to compile more easily old 3.x code" OFF)
 
