@@ -5,6 +5,7 @@
     "description": "",
     "homepage": "",
     "dependencies": [
-        "gtest"
+        "gtest",
+        "zeromq"
     ]
 }

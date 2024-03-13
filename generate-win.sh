@@ -14,10 +14,10 @@ HOST_TRIPLET=x64-mingw-static
 
 mkdir -p ./.build-win
 
-#rm -R ./.build-win/CMakeFiles 2>/dev/null
-#rm ./.build-win/cmake_install.cmake 2>/dev/null
-#rm ./.build-win/CMakeCache.txt 2>/dev/null
-#rm ./.build-win/Makefile 2>/dev/null
+rm -R ./.build-win/CMakeFiles 2>/dev/null
+rm ./.build-win/cmake_install.cmake 2>/dev/null
+rm ./.build-win/CMakeCache.txt 2>/dev/null
+rm ./.build-win/Makefile 2>/dev/null
 
 echo "TARGET_TRIPLET:${TARGET_TRIPLET}"
 echo "HOST_TRIPLET:${HOST_TRIPLET}"

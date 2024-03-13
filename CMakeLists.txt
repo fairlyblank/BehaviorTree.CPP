@@ -29,8 +29,8 @@ option(BTCPP_SHARED_LIBS "Build shared libraries" ON)
 option(BTCPP_BUILD_TOOLS "Build commandline tools" ON)
 option(BTCPP_EXAMPLES   "Build tutorials and examples" ON)
 option(BTCPP_UNIT_TESTS "Build the unit tests" ON)
-option(BTCPP_GROOT_INTERFACE "Add Groot2 connection. Requires ZeroMQ" OFF)
-option(BTCPP_SQLITE_LOGGING "Add SQLite logging." OFF)
+option(BTCPP_GROOT_INTERFACE "Add Groot2 connection. Requires ZeroMQ" ON)
+option(BTCPP_SQLITE_LOGGING "Add SQLite logging." ON)
 
 option(USE_V3_COMPATIBLE_NAMES  "Use some alias to compile more easily old 3.x code" OFF)
 
@@ -163,6 +163,8 @@ target_link_libraries(${BTCPP_LIBRARY}
         ${CMAKE_DL_LIBS}
         $<BUILD_INTERFACE:foonathan::lexy>
         ${BTCPP_EXTRA_LIBRARIES}
+        ws2_32
+        Iphlpapi
 )
 
 target_include_directories(${BTCPP_LIBRARY}
@@ -177,6 +179,7 @@ target_include_directories(${BTCPP_LIBRARY}
 
 target_compile_definitions(${BTCPP_LIBRARY} PRIVATE $<$<CONFIG:Debug>:TINYXML2_DEBUG>)
 target_compile_definitions(${BTCPP_LIBRARY} PUBLIC BTCPP_LIBRARY_VERSION="${CMAKE_PROJECT_VERSION}")
+target_compile_definitions(${BTCPP_LIBRARY} PUBLIC ZMQ_STATIC)
 
 target_compile_features(${BTCPP_LIBRARY} PUBLIC cxx_std_17)
 
