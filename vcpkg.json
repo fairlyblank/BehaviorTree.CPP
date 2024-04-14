@@ -6,6 +6,7 @@
     "homepage": "",
     "dependencies": [
         "gtest",
-        "zeromq"
+        "zeromq",
+        "sqlite3"
     ]
 }
