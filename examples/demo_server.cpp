@@ -61,12 +61,34 @@ struct Demo {
     logger2 = std::make_shared<BT::SqliteLogger>(tree, "demo.db3", append_to_database);
   }
 
-  void step() {
+  bool step() {
     try {
-      tree.tickOnce();
+      auto status = tree.tickOnce();
+      switch (status) {
+        case BT::NodeStatus::IDLE:
+          cout << "IDLE" << "\n";
+          break;
+        case BT::NodeStatus::RUNNING:
+          cout << "RUNNING" << "\n";
+          break;
+        case BT::NodeStatus::SUCCESS:
+          cout << "SUCCESS" << "\n";
+          break;
+        case BT::NodeStatus::FAILURE:
+          cout << "FAILURE" << "\n";
+          break;
+        default:
+          cout << (int)status << "\n";
+          break;
+      }
+
+      return BT::isStatusCompleted(status);
+
     } catch (std::exception const& e) {
       cout << format("exception: {}\n", e.what());
     }
+
+    return true;
   }
 
 };
@@ -85,7 +107,9 @@ int main()
   while(1)
   {
     std::cout << "Start" << std::endl;
-    demo.step();
+
+    if (demo.step())
+      break;
 
     std::this_thread::sleep_for(std::chrono::milliseconds(2000));
   }
