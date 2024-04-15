@@ -5,7 +5,7 @@
 
 #include "behaviortree_cpp/loggers/bt_file_logger_v2.h"
 #include "behaviortree_cpp/bt_factory.h"
-#include "behaviortree_cpp/loggers/groot2_publisher.h"
+#include "behaviortree_cpp/loggers/ui_publisher.h"
 #include "behaviortree_cpp/loggers/bt_sqlite_logger.h"
 #include "behaviortree_cpp/xml_parsing.h"
 #include "behaviortree_cpp/json_export.h"
@@ -15,7 +15,7 @@ using namespace std;
 struct Demo {
   BT::BehaviorTreeFactory factory;
   BT::Tree tree;
-  std::shared_ptr<BT::Groot2Publisher> pub;
+  std::shared_ptr<BT::UIPublisher> pub;
   std::shared_ptr<BT::FileLogger2> logger1;
   std::shared_ptr<BT::SqliteLogger> logger2;
 
@@ -46,10 +46,10 @@ struct Demo {
     }
     file_o << xml_fulltree;
 
-    // Connect the Groot2Publisher. This will allow Groot2 to
+    // Connect the UIPublisher. This will allow Groot2 to
     // get the tree and poll status updates.
     const unsigned port = 1667;
-    pub = std::make_shared<BT::Groot2Publisher>(tree, port);
+    pub = std::make_shared<BT::UIPublisher>(tree, port);
 
     // Add two more loggers, to save the transitions into a file.
     // Both formats are compatible with Groot2
@@ -113,6 +113,8 @@ int main()
 
     std::this_thread::sleep_for(std::chrono::milliseconds(2000));
   }
+
+  std::this_thread::sleep_for(std::chrono::milliseconds(5000));
 
   return 0;
 }

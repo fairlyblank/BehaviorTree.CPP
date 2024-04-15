@@ -130,6 +130,7 @@ list(APPEND BT_SOURCE
 if(BTCPP_GROOT_INTERFACE)
     # should be found already, at this stage
     list(APPEND BT_SOURCE  src/loggers/groot2_publisher.cpp )
+    list(APPEND BT_SOURCE  src/loggers/ui_publisher.cpp )
 endif()
 
 if(BTCPP_SQLITE_LOGGING)
