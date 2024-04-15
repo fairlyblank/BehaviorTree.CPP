@@ -18,6 +18,8 @@
 #include <sstream>
 #include <string>
 #include <typeindex>
+#include <unordered_set>
+#include <format>
 
 #if defined(__linux) || defined(__linux__)
 #pragma GCC diagnostic push
@@ -101,7 +103,9 @@ struct XMLParser::PImpl
                                 const std::string &prefix_path,
                                 Tree& output_tree,
                                 Blackboard::Ptr blackboard,
-                                const TreeNode::Ptr& root_node);
+                                const TreeNode::Ptr& root_node,
+                                // [[lcx]]
+                                std::unordered_set<std::string> pretrees);
 
   void getPortsRecursively(const XMLElement* element,
                            std::vector<std::string>& output_ports);
@@ -581,7 +585,8 @@ Tree XMLParser::instantiateTree(const Blackboard::Ptr& root_blackboard,
   }
 
   _p->recursivelyCreateSubtree(main_tree_ID, {}, {},
-                               output_tree, root_blackboard, TreeNode::Ptr());
+                               output_tree, root_blackboard, TreeNode::Ptr(),
+                               {});
   output_tree.initialize();
   return output_tree;
 }
@@ -858,12 +863,13 @@ void BT::XMLParser::PImpl::recursivelyCreateSubtree(
     const std::string& prefix_path,
     Tree& output_tree,
     Blackboard::Ptr blackboard,
-    const TreeNode::Ptr& root_node)
+    const TreeNode::Ptr& root_node,
+    std::unordered_set<std::string> pretrees)
 {
   std::function<void(const TreeNode::Ptr&, Tree::Subtree::Ptr, std::string, const XMLElement*)>
       recursiveStep;
 
-  recursiveStep = [&](TreeNode::Ptr parent_node,
+  recursiveStep = [&, this](TreeNode::Ptr parent_node,
                       Tree::Subtree::Ptr subtree,
                       std::string prefix,
                       const XMLElement* element)
@@ -885,6 +891,14 @@ void BT::XMLParser::PImpl::recursivelyCreateSubtree(
     {
       auto new_bb = Blackboard::create(blackboard);
       const std::string subtree_ID = element->Attribute("ID");
+
+      // [[lcx]]
+      auto new_pretrees = pretrees;
+      if (new_pretrees.contains(subtree_ID)) {
+        throw std::runtime_error(std::format("recusive subtree isnot supported: {} in: {}", subtree_ID, tree_path));
+      }
+      new_pretrees.insert(subtree_ID);
+
       std::unordered_map<std::string, std::string> remapping;
       bool do_autoremap = false;
 
@@ -968,7 +982,8 @@ void BT::XMLParser::PImpl::recursivelyCreateSubtree(
       recursivelyCreateSubtree(subtree_ID,
                                subtree_path, // name
                                subtree_path + "/",  //prefix
-                               output_tree, new_bb, node);
+                               output_tree, new_bb, node,
+                               new_pretrees);
     }
   };
 

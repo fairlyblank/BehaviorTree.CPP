@@ -19,13 +19,12 @@ struct Demo {
   std::shared_ptr<BT::FileLogger2> logger1;
   std::shared_ptr<BT::SqliteLogger> logger2;
 
-  Demo(): factory() {
-    cout << "Demo cons\n";
+  Demo(): factory() {}
 
+  void init() {
     std::ifstream file("demo.xml", std::ios::binary);
     if (!file) {
-      cout << "open file failed\n";
-      return;
+      throw std::runtime_error("open file failed");
     }
 
     std::string content(std::istreambuf_iterator<char>{file}, {});
@@ -35,23 +34,15 @@ struct Demo {
     // You don't need to write that by hand, it can be automatically
     // generated using the following command.
     std::string xml_models = BT::writeTreeNodesModelXML(factory);
-    cout << "1\n";
 
     factory.registerBehaviorTreeFromText(content.data());
-    cout << "2\n";
 
-    try {
-      tree = factory.createTree("MainTree");
-    } catch (std::exception const& e) {
-      cout << format("createTree failed: {}\n", e.what());
-    }
-    cout << "3\n";
+    tree = factory.createTree("MainTree");
 
     auto xml_fulltree = BT::WriteTreeToXML(tree, true, true);
     std::ofstream file_o("demo_full.xml", std::ios::binary);
     if (!file_o) {
-      cout << "create file failed\n";
-      return;
+      throw std::runtime_error("create file failed");
     }
     file_o << xml_fulltree;
 
@@ -68,8 +59,6 @@ struct Demo {
     // SQLite logger can save multiple sessions into the same database
     bool append_to_database = true;
     logger2 = std::make_shared<BT::SqliteLogger>(tree, "demo.db3", append_to_database);
-
-    cout << "Demo cons leave\n";
   }
 
   void step() {
@@ -85,6 +74,13 @@ struct Demo {
 int main()
 {
   Demo demo;
+
+  try {
+    demo.init();
+  } catch (std::exception const& e) {
+    cout << std::format("init failed: {}\n", e.what());
+    return 1;
+  }
 
   while(1)
   {
