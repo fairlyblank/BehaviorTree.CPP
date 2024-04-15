@@ -25,7 +25,7 @@ else()
 endif()
 
 #---- project configuration ----
-option(BTCPP_SHARED_LIBS "Build shared libraries" ON)
+option(BTCPP_SHARED_LIBS "Build shared libraries" OFF)
 option(BTCPP_BUILD_TOOLS "Build commandline tools" ON)
 option(BTCPP_EXAMPLES   "Build tutorials and examples" ON)
 option(BTCPP_UNIT_TESTS "Build the unit tests" ON)
@@ -181,7 +181,7 @@ target_compile_definitions(${BTCPP_LIBRARY} PRIVATE $<$<CONFIG:Debug>:TINYXML2_D
 target_compile_definitions(${BTCPP_LIBRARY} PUBLIC BTCPP_LIBRARY_VERSION="${CMAKE_PROJECT_VERSION}")
 target_compile_definitions(${BTCPP_LIBRARY} PUBLIC ZMQ_STATIC)
 
-target_compile_features(${BTCPP_LIBRARY} PUBLIC cxx_std_17)
+target_compile_features(${BTCPP_LIBRARY} PUBLIC cxx_std_20)
 
 if(MSVC)
 else()

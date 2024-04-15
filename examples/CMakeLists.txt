@@ -50,3 +50,5 @@ target_compile_definitions(t13_plugin_action PRIVATE  BT_PLUGIN_EXPORT )
 set_target_properties(t13_plugin_action PROPERTIES PREFIX "")
 # link dependencies as usual
 target_link_libraries(t13_plugin_action ${BTCPP_LIBRARY} )
+
+CompileExample("demo_server")
