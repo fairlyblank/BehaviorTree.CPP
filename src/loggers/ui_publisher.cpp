@@ -462,10 +462,13 @@ void UIPublisher::serverLoop()
           std::memcpy(&trans_buffer[offset], &trans.status, 1);
           offset += 1;
         }
-        printf("got GET_TRANSITIONS: %u\n", offset);
+        printf("got GET_TRANSITIONS: %llu\n", offset);
         _p->transitions_buffer.clear();
         trans_buffer.resize(offset);
         reply_msg.addstr(trans_buffer);
+
+        // [[lcx]]
+        reply_msg.addstr(std::to_string(_p->recording_fist_time.count()));
       } break;
 
       default: {

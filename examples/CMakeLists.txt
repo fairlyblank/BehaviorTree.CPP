@@ -4,7 +4,8 @@ set(CMAKE_DEBUG_POSTFIX "")
 
 function(CompileExample name)
     add_executable(${name}  ${name}.cpp )
-    target_link_libraries(${name} ${BTCPP_LIBRARY}  bt_sample_nodes )
+    target_include_directories(${name} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../3rdparty ${ZeroMQ_INCLUDE_DIRS})
+    target_link_libraries(${name} ${BTCPP_LIBRARY} bt_sample_nodes )
 endfunction()
 
 
@@ -52,3 +53,4 @@ endfunction()
 ###! target_link_libraries(t13_plugin_action ${BTCPP_LIBRARY} )
 
 CompileExample("demo_server")
+CompileExample("demo_client")
