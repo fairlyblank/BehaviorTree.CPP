@@ -1,7 +1,7 @@
 #include <fstream>
 #include <map>
 #include <variant>
-#include <format>
+//#include <format>
 
 #include "behaviortree_cpp/loggers/bt_file_logger_v2.h"
 #include "behaviortree_cpp/bt_factory.h"
@@ -85,7 +85,7 @@ struct Demo {
       return BT::isStatusCompleted(status);
 
     } catch (std::exception const& e) {
-      cout << format("exception: {}\n", e.what());
+      cout << "exception: " << e.what() << "\n";
     }
 
     return true;
@@ -100,7 +100,7 @@ int main()
     try {
       demo.init();
     } catch (std::exception const& e) {
-      cout << std::format("init failed: {}\n", e.what());
+      cout << "init failed: " << e.what() << "\n";
       return 1;
     }
 

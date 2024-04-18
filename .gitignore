@@ -13,3 +13,4 @@ CMakeSettings.json
 .DS_Store
 
 .build-win/
+.build-linux-x64/

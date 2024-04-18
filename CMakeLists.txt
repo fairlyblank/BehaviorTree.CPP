@@ -4,6 +4,10 @@ include("${VCPKG_OVERLAY_TRIPLETS}/${VCPKG_TARGET_TRIPLET}.cmake" OPTIONAL)
 
 project(behaviortree_cpp VERSION 4.5.1 LANGUAGES C CXX)
 
+if (${CMAKE_SYSTEM_PROCESSOR} STREQUAL "x86_64")
+    set(CMAKE_EXE_LINKER_FLAGS " -static-libstdc++ -ldl -pthread -lrt -Wl,-dynamic-linker,//lib64/ld-linux-x86-64.so.2 -Wl,-rpath,//lib64 -Wl,-rpath,.")
+endif()
+
 set(CMAKE_CONFIG_PATH ${CMAKE_MODULE_PATH}  "${CMAKE_CURRENT_LIST_DIR}/cmake")
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CONFIG_PATH}")
 
@@ -156,6 +160,10 @@ else()
     add_library(${BTCPP_LIBRARY} STATIC ${BT_SOURCE})
 endif()
 
+if (WIN32)
+    list(APPEND BTCPP_EXTRA_LIBRARIES ws2_32 Iphlpapi)
+endif()
+
 message(STATUS "BTCPP_EXTRA_LIBRARIES: ${BTCPP_EXTRA_LIBRARIES}")
 
 target_link_libraries(${BTCPP_LIBRARY}
@@ -164,8 +172,6 @@ target_link_libraries(${BTCPP_LIBRARY}
         ${CMAKE_DL_LIBS}
         $<BUILD_INTERFACE:foonathan::lexy>
         ${BTCPP_EXTRA_LIBRARIES}
-        ws2_32
-        Iphlpapi
 )
 
 target_include_directories(${BTCPP_LIBRARY}
@@ -227,3 +233,4 @@ INSTALL( DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/
 
 export_btcpp_package()
 
+message(STATUS "leave cmakelists")

@@ -19,7 +19,6 @@
 #include <string>
 #include <typeindex>
 #include <unordered_set>
-#include <format>
 
 #if defined(__linux) || defined(__linux__)
 #pragma GCC diagnostic push
@@ -895,7 +894,9 @@ void BT::XMLParser::PImpl::recursivelyCreateSubtree(
       // [[lcx]]
       auto new_pretrees = pretrees;
       if (new_pretrees.contains(subtree_ID)) {
-        throw std::runtime_error(std::format("recusive subtree isnot supported: {} in: {}", subtree_ID, tree_path));
+        std::stringstream ss;
+        ss << "recusive subtree isnot supported: " << subtree_ID << " in: " << tree_path;
+        throw std::runtime_error(ss.str());
       }
       new_pretrees.insert(subtree_ID);
 

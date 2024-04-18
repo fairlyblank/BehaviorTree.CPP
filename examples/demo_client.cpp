@@ -1,7 +1,7 @@
 #include <fstream>
 #include <map>
 #include <variant>
-#include <format>
+// #include <format>
 
 #include "behaviortree_cpp/json_export.h"
 #include "behaviortree_cpp/loggers/groot2_publisher.h"
@@ -149,7 +149,7 @@ int main(int argc, char* argv[]) {
     client.connect("tcp://" + ip + ":1667");
     action(client);
   } catch (std::exception const& e) {
-    cout << format("exception: {}\n", e.what());
+    cout << "exception: " << e.what() << "\n";
   }
 
   return 0;
