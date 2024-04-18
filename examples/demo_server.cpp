@@ -28,7 +28,7 @@ struct Demo {
     }
 
     std::string content(std::istreambuf_iterator<char>{file}, {});
-    cout << std::format("content: {}\n", content.data());
+    // cout << std::format("content: {}\n", content.data());
 
     // Groot2 editor requires a model of your registered Nodes.
     // You don't need to write that by hand, it can be automatically
@@ -95,26 +95,26 @@ struct Demo {
 
 int main()
 {
-  Demo demo;
+  while (true) {
+    Demo demo;
+    try {
+      demo.init();
+    } catch (std::exception const& e) {
+      cout << std::format("init failed: {}\n", e.what());
+      return 1;
+    }
 
-  try {
-    demo.init();
-  } catch (std::exception const& e) {
-    cout << std::format("init failed: {}\n", e.what());
-    return 1;
-  }
-
-  while(1)
-  {
     std::cout << "Start" << std::endl;
+    while(true)
+    {
+      if (demo.step())
+        break;
 
-    if (demo.step())
-      break;
+      std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+    }
 
-    std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+    std::this_thread::sleep_for(std::chrono::milliseconds(5000));
   }
-
-  std::this_thread::sleep_for(std::chrono::milliseconds(5000));
 
   return 0;
 }

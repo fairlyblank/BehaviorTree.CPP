@@ -34,6 +34,9 @@ void action(zmq::socket_t& client) {
 
     auto rep_header = DeserializeReplyHeader(rep_msg[0].to_string());
     assert(rep_header == req_header);
+    cout << "unique_id: " << dec << rep_header.request.unique_id << "\n";
+    cout << "protocol: " << (uint32_t)rep_header.request.protocol << "\n";
+    cout << "type: " << (uint32_t)rep_header.request.type << "\n";
     cout << "tree_id: ";
     for (uint8_t c: rep_header.tree_id)
       cout << hex << (uint32_t)c;
@@ -60,6 +63,9 @@ void action(zmq::socket_t& client) {
 
     auto rep_header = DeserializeReplyHeader(rep_msg[0].to_string());
     assert(rep_header == req_header);
+    cout << "unique_id: " << dec <<  rep_header.request.unique_id << "\n";
+    cout << "protocol: " << (uint32_t)rep_header.request.protocol << "\n";
+    cout << "type: " << (uint32_t)rep_header.request.type << "\n";
     cout << "tree_id: ";
     for (uint8_t c: rep_header.tree_id)
       cout << hex << (uint32_t)c;
@@ -94,6 +100,9 @@ void action(zmq::socket_t& client) {
 
     auto rep_header = DeserializeReplyHeader(rep_msg[0].to_string());
     assert(rep_header == req_header);
+    cout << "unique_id: " << dec << rep_header.request.unique_id << "\n";
+    cout << "protocol: " << (uint32_t)rep_header.request.protocol << "\n";
+    cout << "type: " << (uint32_t)rep_header.request.type << "\n";
     cout << "tree_id: ";
     for (uint8_t c: rep_header.tree_id)
       cout << hex << (uint32_t)c;
