@@ -54,6 +54,13 @@ enum RequestType : uint8_t
   // get all transitions when recording
   GET_TRANSITIONS = 't',
 
+  UPDATE_MODE = 'M',
+  START = 'A',
+  SUSPEND = 'P',
+  STOP = 'O',
+  AUTH = 'H',
+  STATE = 'E',
+
   UNDEFINED = 0,
 };
 
@@ -76,6 +83,7 @@ inline const char* ToString(const RequestType& type)
   case RequestType::GET_TRANSITIONS: return "get_transitions";
 
   case RequestType::UNDEFINED: return "undefined";
+  default: break;
   }
   return "undefined";
 }
