@@ -7,6 +7,7 @@
     "dependencies": [
         "gtest",
         "zeromq",
-        "sqlite3"
+        "sqlite3",
+        "fmt"
     ]
 }

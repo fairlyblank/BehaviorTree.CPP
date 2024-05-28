@@ -30,7 +30,7 @@ struct Transition
   uint8_t padding[5];
 };
 
-std::array<char,16> CreateRandomUUID()
+static std::array<char,16> CreateRandomUUID()
 {
   std::mt19937 gen;
   std::uniform_int_distribution<uint32_t> dist;
