@@ -59,6 +59,7 @@ enum RequestType : uint8_t
   SUSPEND = 'P',
   STOP = 'O',
   AUTH = 'H',
+  REWIND = 'W',
   STATE = 'E',
 
   UNDEFINED = 0,
