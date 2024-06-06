@@ -55,12 +55,14 @@ enum RequestType : uint8_t
   GET_TRANSITIONS = 't',
 
   UPDATE_MODE = 'M',
-  START = 'A',
+  START = 'F',
   SUSPEND = 'P',
   STOP = 'O',
   AUTH = 'H',
   REWIND = 'W',
   STATE = 'E',
+  TREE = 'C',
+  MODEL = 'L',
 
   UNDEFINED = 0,
 };
